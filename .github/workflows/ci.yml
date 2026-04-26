@@ -156,11 +156,11 @@ jobs:
       - name: "Check out Git repository"
         uses: actions/checkout@3df4ab11eba7bda6032a0b82a6bb43b11571feac #v4.0.0
       - name: "Download unit test coverage data"
-        uses: actions/download-artifact@9bc31d5ccc31df68ecc42ccf4149144866c47d8a #v3.0.2
+        uses: actions/download-artifact@a9bc5e6ef2cb54c177f32aa5726adaa15e7e2d59 # v3.1.0
         with:
           name: unit-test-lcov
       - name: "Download API test coverage data"
-        uses: actions/download-artifact@9bc31d5ccc31df68ecc42ccf4149144866c47d8a #v3.0.2
+        uses: actions/download-artifact@a9bc5e6ef2cb54c177f32aa5726adaa15e7e2d59 # v3.1.0
         with:
           name: api-test-lcov
       - name: "Publish coverage to Codeclimate"
