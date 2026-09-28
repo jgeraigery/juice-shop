@@ -3,22 +3,22 @@
   * SPDX-License-Identifier: MIT
   */
  
-+import path from 'path';
  import path = require('path')
  import { type Request, type Response, type NextFunction } from 'express'
  
  module.exports = function serveQuarantineFiles () {
--  return ({ params, query }: Request, res: Response, next: NextFunction) => {
-+    const resolvedPath = path.resolve('ftp/quarantine/', file);
-+    const expectedDir = path.resolve('ftp/quarantine');
-+    if (!resolvedPath.startsWith(expectedDir)) {
-+        return res.status(400).send('Invalid file path');
-+    }
-+    res.sendFile(resolvedPath);
+   return ({ params, query }: Request, res: Response, next: NextFunction) => {
      const file = params.file
  
      if (!file.includes('/')) {
-       res.sendFile(path.resolve('ftp/quarantine/', file))
+-      res.sendFile(path.resolve('ftp/quarantine/', file))
++    const resolvedPath = path.resolve('ftp/quarantine/', file);
++    const expectedDir = path.resolve('ftp/quarantine/');
++    if (!resolvedPath.startsWith(expectedDir)) {
++        res.status(403);
++        return next(new Error('Invalid file path!'));
++    }
++    res.sendFile(resolvedPath);
      } else {
        res.status(403)
        next(new Error('File names cannot contain forward slashes!'))
