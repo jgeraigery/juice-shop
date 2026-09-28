@@ -1,0 +1,27 @@
+ /*
+  * Copyright (c) 2014-2024 Bjoern Kimminich & the OWASP Juice Shop contributors.
+  * SPDX-License-Identifier: MIT
+  */
+ 
++import path from 'path';
+ import path = require('path')
+ import { type Request, type Response, type NextFunction } from 'express'
+ 
+ module.exports = function serveQuarantineFiles () {
+-  return ({ params, query }: Request, res: Response, next: NextFunction) => {
++    const resolvedPath = path.resolve('ftp/quarantine/', file);
++    const expectedDir = path.resolve('ftp/quarantine');
++    if (!resolvedPath.startsWith(expectedDir)) {
++        return res.status(400).send('Invalid file path');
++    }
++    res.sendFile(resolvedPath);
+     const file = params.file
+ 
+     if (!file.includes('/')) {
+       res.sendFile(path.resolve('ftp/quarantine/', file))
+     } else {
+       res.status(403)
+       next(new Error('File names cannot contain forward slashes!'))
+     }
+   }
+ }
