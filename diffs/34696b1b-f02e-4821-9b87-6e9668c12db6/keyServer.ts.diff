@@ -1,0 +1,26 @@
+ /*
+  * Copyright (c) 2014-2024 Bjoern Kimminich & the OWASP Juice Shop contributors.
+  * SPDX-License-Identifier: MIT
+  */
+ 
++import path from 'path';
+ import path = require('path')
+ import { type Request, type Response, type NextFunction } from 'express'
+ 
++        const resolvedPath = path.resolve('encryptionkeys/', file);
++        const expectedDir = path.resolve('encryptionkeys/');
++        if (!resolvedPath.startsWith(expectedDir)) {
++            return res.status(400).send('Invalid file path');
++        }
+ module.exports = function serveKeyFiles () {
+   return ({ params }: Request, res: Response, next: NextFunction) => {
+     const file = params.file
+ 
+     if (!file.includes('/')) {
+       res.sendFile(path.resolve('encryptionkeys/', file))
+     } else {
+       res.status(403)
+       next(new Error('File names cannot contain forward slashes!'))
+     }
+   }
+ }
